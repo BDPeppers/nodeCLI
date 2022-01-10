@@ -1,0 +1,25 @@
+{
+  "name": "nodeCommandLineApp",
+  "version": "1.0.0",
+  "description": "a tiny command-line app that stores a multi-value string dictionary in memory",
+  "main": "src/cli.js",
+  "bin": {
+    "start-app": "bin/start-app"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nodeJS",
+    "CLI"
+  ],
+  "author": "Briana Peppers",
+  "license": "ISC",
+  "dependencies": {
+    "esm": "^3.2.25",
+    "inquirer": "^8.2.0"
+  },
+  "devDependencies": {
+    "jest": "^27.4.7"
+  }
+}
