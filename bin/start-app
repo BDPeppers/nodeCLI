@@ -1,3 +1,3 @@
 #!/usr/bin/env node
 require = require('esm')(module /*, options*/);
-require('../src/cli').cli();//process.argv - an array of all the arguments passed to this script from the command line
+require('../src/cli').cli();//entry-point

@@ -13,6 +13,8 @@ git clone <repo>
 
 ```bash
 
+>start-app - Start the application
+
 >KEYS - Returns all the keys in a dictionary
 Return 'empty set' if empty
 required parameters = KEY
@@ -51,6 +53,11 @@ required parameters = ALLMEMBERS
 >ITEMS - Returns all the keys in the dictionary and all their members
 required parameters = ITEMS
 
+>EXIT - close the application
+
+>npm test - run Mocha unit tests
+
+
 ```
 
 ## References
@@ -58,4 +65,4 @@ required parameters = ITEMS
 
 [Inquirer.js](https://www.npmjs.com/package/inquirer#documentation)
 
-[Jest](https://jestjs.io/docs/getting-started)
+[Mocha](https://mochajs.org/#getting-started)

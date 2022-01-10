@@ -60,34 +60,34 @@ function handleInput(input){
                 keepGoing();
                 break;
             case 'MEMBERS':
-                members(key);
+                members(key, miniDictionary);
                 keepGoing();
                 break;
             case 'ADD':
-                add(key, value);
+                add(key, value, miniDictionary);
                 keepGoing();
                 break;
             case 'REMOVE':
-                remove(key, value);
+                remove(key, value, miniDictionary);
                 keepGoing();
                 break;
             case 'REMOVEALL':
-                removeAll(key);
+                removeAll(key, miniDictionary);
                 keepGoing();
                 break;
             case 'CLEAR':
-                clear();
+                clear(miniDictionary);
                 keepGoing();
                 break;
             case 'KEYEXISTS':
-                keyExists(key);
+                keyExists(key, miniDictionary);
                 keepGoing();
                 break;
-            case 'MEMEBEREXISTS':
-                memberExists(key, value);
+            case 'MEMBEREXISTS':
+                memberExists(key, value, miniDictionary);
                 keepGoing();
                 break;
-            case 'ALLMEMEBERS':
+            case 'ALLMEMBERS':
                 allMembers(miniDictionary);
                 keepGoing();
                 break;
@@ -117,7 +117,7 @@ function handleInput(input){
 
 //1.Returns all the keys in a dictionary
 function keys(dict){
-    if(isDictEmpty(dict)){
+    if(!isDictEmpty(dict)){
         let keys = Object.keys(dict)
         for (const key of keys) {
             console.log(key);
@@ -129,11 +129,16 @@ function keys(dict){
 
 //2.Returns all the members for a given key
 function members(key, dict){
-    if(keyCheck(key)){
+    if(key == null){
+        console.log('Invalid Input');
+        return;
+    }
+
+    if(!keyCheck(key, dict)){
         console.log(`ERROR, key does not exist for ${key}`);
     }else{
-        dict[key].forEach(element => {
-            console.log(element);
+        dict[key].forEach(x => {
+            console.log(x);
         });
     }
 }
@@ -162,12 +167,12 @@ function remove(key, value, dict){
         return;
     }
     
-    if(keyCheck(key)){
+    if(!keyCheck(key, dict)){
         console.log(`ERROR, key does not exist for ${key}`);
         return;
     }
 
-    if(memberCheck(key, value)){
+    if(!memberCheck(key, value, dict)){
         console.log(`ERROR, member: ${value} does not exist for ${key}`);
         return;
     }
@@ -183,7 +188,7 @@ function removeAll(key, dict){
         return;
     }
 
-    if(keyCheck(key)){
+    if(!keyCheck(key, dict)){
         console.log(`ERROR, key does not exist for ${key}`);
         return;
     }
@@ -199,22 +204,25 @@ function clear(dict){
 }
 
 //7.KeyExists returns whether or not a key exists
-function keyExists(key){
-    console.log(keyCheck(key));
+function keyExists(key, dict){
+    console.log(keyCheck(key, dict));
 }
 
 //8.MemberExists returns whether or not a member exists
-function memberExists(key, value){
-    console.log(memberCheck(key, value));
+function memberExists(key, value, dict){
+    console.log(memberCheck(key, value, dict));
 }
 
 //9. returns all memmbers
 function allMembers(dict){
-    if(isDictEmpty(dict)){
+    if(!isDictEmpty(dict)){
         let values = Object.values(dict)
         for (const value of values) {
-            console.log(value);
+            value.forEach(x => {
+                console.log(x)
+            })
         }
+        
     }else{
         console.log('empty set');
     } 
@@ -225,9 +233,10 @@ function items(dict){
     if(isDictEmpty(dict)){
         console.log('empty set');
     }else{
-        for (const key of dict) {
-            dict[key].forEach(element => {
-                console.log(`${key} : ${element}`)
+        let keys = Object.keys(dict)
+        for (const key of keys) {
+            dict[key].forEach(x => {
+                console.log(`${key} : ${x}`)
             });
         }
     }
@@ -242,16 +251,17 @@ export function isDictEmpty(dict){
 }
 
 export function emptyDict(dict){
-    dict = {}
-    return Object.keys(dict).length;
+    Object.keys(dict).forEach(x => {
+        deleteKey(x, dict)
+    })
 }
 
 export function memberCheck(key, value, dict){
-   return (dict.hasOwnProperty(key) && dict[key].includes(value)) ? true : false;
+   return ((Object.keys(dict)).includes(key) && dict[key].includes(value)) ? true : false;
 }
 
 export function keyCheck(key, dict){
-    return dict.hasOwnProperty(key) ? true : false;
+    return (Object.keys(dict)).includes(key) ? true : false;
 }
 
 export function deleteKey(key, dict){
@@ -265,7 +275,7 @@ export function deleteMember(key, value, dict){
 }
 
 export function addMember(key, value, dict){
-    if(keyCheck(key, dict)){
+    if(!keyCheck(key, dict)){
         dict[key] = new Array(value);
     }else{
         dict[key].push(value);  
