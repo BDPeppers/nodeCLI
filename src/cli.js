@@ -95,6 +95,11 @@ function handleInput(input){
                 items(miniDictionary)
                 keepGoing();
                 break;
+
+            case 'INTERSECTION':
+                intersection(key, value, miniDictionary)
+                keepGoing();
+                break;
             case 'EXIT':
                 console.log('Exiting...')
                 break;
@@ -162,7 +167,7 @@ function add(key, value, dict){
 
 //4.Removes a member from a key. 
 function remove(key, value, dict){
-    if(key==null || value==null){
+    if(key==null || value==null){ 
         console.log('invalid input');
         return;
     }
@@ -242,6 +247,60 @@ function items(dict){
     }
 }
 
+
+// //{
+//     key: [1 2,3..]
+// }
+
+//11.Given 2 keuys return the common members
+//required intersection key1, key2
+function intersection(key, key2, dict)
+{
+
+    let common  = []
+    //valid user input 
+    //valid that both keys exist
+
+
+    if(isDictEmpty(dict)){
+        console.log('empty set');
+        return;
+    }
+
+    let keyCheck1 = keyCheck(key, dict)
+    let keyCheck2 = keyCheck(key2, dict)
+
+    if(!(keyCheck1 && keyCheck2)){
+        console.log('no common members')
+        return;
+    }else{
+    //want to go through each member array to find common members    
+
+        //have an array to keep the common members
+
+        //determine which one is smaller
+        let smaller;
+        let bigger;
+
+        if(dict[key].length === dict[key2].length){
+            smaller = dict[key];
+            bigger = dict[key2];  
+
+        }else{
+            smaller = smallerArr(dict[key], dict[key2])
+            bigger = biggerArr(dict[key], dict[key2])
+        }
+
+        for(let i = 0; i < smaller.length; i++){
+            if(bigger.includes(smaller[i])){
+                common.push(smaller[i])
+            }
+        }
+        console.log(common)
+    }
+
+}
+
 // #endregion
 
 
@@ -281,4 +340,13 @@ export function addMember(key, value, dict){
         dict[key].push(value);  
     } 
 }
+
+export function smallerArr(arr1, arr2){
+    return  (arr1.length < arr2.length) ? arr1 : arr2;
+}
+
+export function biggerArr(arr1, arr2){
+    return  (arr1.length > arr2.length) ? arr1 : arr2;
+}
+
 // #endregion
